@@ -15,7 +15,7 @@
 
 ;; used by functions in this lib. Use binding to set it
 ;; to an instance of processing.core.PApplet
-(def ^:dynamic *applet*)
+(def *applet*)
 
 (def toupper (memfn toUpperCase))
 
@@ -118,7 +118,7 @@
   "Takes an optional keyword argument:  One  of: :points, :lines, :triangles,
   :triangle-fan, :triangle-strip, :quads, :quad-strip."
   ([] `(.beginShape *applet*))
-  ([kind] 
+  ([kind]
      (let [kind (shapes-map kind)]
        `(.beginShape *applet* (int ~kind)))))
 
@@ -672,7 +672,8 @@
 
 (defn scale
   ([s] (.scale *applet* (float s)))
-  ([sx sy] (.scale *applet* (float sx) (float sy))))
+  ([sx sy] (.scale *applet* (float sx) (float sy)))
+  ([sx sy sz] (.scale *applet* (float sx) (float sy) (float sz))))
 
 (defn screen-x
   ([x y] (.screenX *applet* (float x) (float y)))
