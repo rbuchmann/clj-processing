@@ -875,6 +875,10 @@
 
 (defn width [] (.getWidth *applet*))
 
+(defn image-size [image]
+  [(.width image)
+   (.height image)])
+
 (defmacro with-translation
   "Berforms body with translation, restores current transformation on exit."
   [translation-vector & body]
@@ -897,6 +901,19 @@
      (apply rotate tr#)
      ~@body
      (pop-matrix)))
+
+(defmacro with-pushed-matrix [& body]
+  `(do
+     (push-matrix)
+     ~@body
+     (pop-matrix)))
+
+(defmacro with-graphics [pg & body]
+  `(let [g# ~pg]
+     (binding [*applet* g#]
+       (.beginDraw g#)
+       ~@body
+       (.endDraw g#))))
 
 ;;; version number
 
