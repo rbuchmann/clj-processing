@@ -915,6 +915,12 @@
        ~@body
        (.endDraw g#))))
 
+(defmacro with-camera [& body]
+  `(do
+     (begin-camera)
+     ~@body
+     (end-camera)))
+
 ;;; version number
 
 (let [version-stream (.getResourceAsStream (clojure.lang.RT/baseLoader)
