@@ -161,7 +161,12 @@
 
 ;; $$binary
 
+(declare image-size)
+
 (defn blend
+  ([^PImage src mode]
+     (let [[w h] (image-size *applet*)]
+       (.blend *applet* src 0 0 w h 0 0 w h (int mode))))
   ([sx1 sy1 sx2 sy2 dx1 dy1 dx2 dy2 mode]
      (.blend *applet* (int sx1) (int sy1) (int sx2) (int sy2)
              (int dx1) (int dy1) (int dx2) (int dy2) (int mode)))
@@ -243,6 +248,8 @@
      (.createFont *applet* name (float size) smooth charset)))
 
 (defn create-graphics
+  ([]
+     (.createGraphics *applet* (.width *applet*) (.height *applet*) JAVA2D))
   ([w h renderer]
      (.createGraphics *applet* (int w) (int h) renderer))
   ([w h renderer path]
